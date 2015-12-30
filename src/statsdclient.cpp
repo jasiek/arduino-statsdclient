@@ -12,32 +12,12 @@ statsdclient::statsdclient(IPAddress destIP,
   this->endPacket = endPacket;
 }
 
-statsdclient& statsdclient::begin() {
-  if (this->buffer) delete this->buffer;
-  this->buffer = new buffer[128];
-  return this;
+chain& statsdclient::begin() {
+  return new chain(this);
 }
 
-statsdclient& statsdclient::counter(const char* metric, int value) {
-  return this;
-}
-
-statsdclient& statsdclient::sample(const char* metric, int value, float frequency) {
-  return this;
-}
-
-statsdclient& statsdclient::timing(const char* metric, int value, float frequency) {
-  return this;
-}
-
-statsdclient& statsdclient::gauge(const char* metric, int value) {
-  return this;
-}
-
-statsdclient& statsdclient::set(const char* metric, const char* value) {
-  return this;
-}
-
-void statsdclient::send() {
-  
+void send(const char *buffer) {
+  this->beginPacket(this->destIP, this->destPort);
+  this->write(buffer, strlen(buffer));
+  this->endPacket();
 }
