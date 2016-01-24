@@ -1,6 +1,6 @@
 #include "chain.h"
 
-chain::chain(statsdclient &_client) : client(_client) {
+chain::chain(UDP &_udp) : udp(_udp) {
   this->buffer = new char[128];
   memset(this->buffer, 0, 128);
 }
@@ -41,7 +41,8 @@ chain &chain::set(const char* metric, const char* value) {
 }
 
 void chain::send() {
-  this->client.send(this->buffer);
+  this->udp.write((uint8_t *)this->buffer, strlen(this->buffer));
+  this->udp.endPacket();
   delete this;
 }
 

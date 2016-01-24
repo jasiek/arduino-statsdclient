@@ -1,10 +1,12 @@
 #ifndef _CHAIN_H_
 #define _CHAIN_H_
-#include "statsdclient.h"
+
+#include <Arduino.h>
+#include <Udp.h>
 
 class chain {
  public:
-  chain(statsdclient&);
+  chain(UDP &);
   chain& counter(const char*, int, float);
   chain& counter(const char*, int);
   
@@ -18,7 +20,7 @@ class chain {
   void append(const char *, const char *, const char*);
   void append(const char *, const char *, const char*, float);
   
-  statsdclient &client;
+  UDP &udp;
   char *buffer;
 };
 

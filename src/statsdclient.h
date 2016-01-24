@@ -4,7 +4,7 @@
 #include <IPAddress.h>
 #include <Udp.h>
 
-class chain;
+#include "chain.h"
 
 class statsdclient {
  public:
@@ -12,7 +12,6 @@ class statsdclient {
                uint16_t port,
                UDP &udp);
   chain& begin();
-  void send(const char* buffer);
  private:
   IPAddress destIP;
   uint16_t destPort;
