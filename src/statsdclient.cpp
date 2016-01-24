@@ -2,14 +2,10 @@
 
 statsdclient::statsdclient(IPAddress destIP,
                            uint16_t destPort,
-                           int (*beginPacket)(IPAddress ip, uint16_t port),
-                           size_t (*write)(const uint8_t *buffer, size_t size),
-                           int (*endPacket)()) {
+                           UDP &udp) {
   this->destIP = destIP;
   this->destPort = destPort;
-  this->beginPacket = beginPacket;
-  this->write = write;
-  this->endPacket = endPacket;
+  this->udp = udp;
 }
 
 chain& statsdclient::begin() {
@@ -17,7 +13,7 @@ chain& statsdclient::begin() {
 }
 
 void send(const char *buffer) {
-  this->beginPacket(this->destIP, this->destPort);
-  this->write(buffer, strlen(buffer));
-  this->endPacket();
+  this->udp.beginPacket(this->destIP, this->destPort);
+  this->udp.write(buffer, strlen(buffer));
+  this->udp.endPacket();
 }

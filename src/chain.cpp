@@ -1,34 +1,48 @@
 #include "chain.h"
 
-chain::chain(statsdclient &client) {
+chain::chain(statsdclient &_client) : client(_client) {
   this->buffer = new char[128];
   memset(this->buffer, 0, 128);
+}
+
+chain &chain::counter(const char *metric, int value, float freq) {
+  char stringValue[16];
+  itoa(value, stringValue, 10);
+  append(metric, stringValue, "c", freq);
+  return *this;
 }
 
 chain &chain::counter(const char *metric, int value) {
   char stringValue[16];
   itoa(value, stringValue, 10);
   append(metric, stringValue, "c");
-  return this;
+  return *this;
 }
 
 chain &chain::timing(const char* metric, int value, float freq) {
   char stringValue[16];
   itoa(value, stringValue, 10);
   append(metric, stringValue, "ms", freq);
-  return this;
+  return *this;
+}
+
+chain &chain::timing(const char* metric, int value) {
+  char stringValue[16];
+  itoa(value, stringValue, 10);
+  append(metric, stringValue, "ms");
+  return *this;
 }
 
 chain &chain::gauge(const char* metric, int value) {
   char stringValue[16];
   itoa(value, stringValue, 10);
   append(metric, stringValue, "g");
-  return this;
+  return *this;
 }
 
 chain &chain::set(const char* metric, const char* value) {
   append(metric, value, "s");
-  return this;
+  return *this;
 }
 
 void chain::send() {
