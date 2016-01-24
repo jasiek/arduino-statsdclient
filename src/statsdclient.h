@@ -16,7 +16,7 @@ class statsdclient {
  private:
   IPAddress destIP;
   uint16_t destPort;
-  int (*beginPacket)(IPAddress, uint16_t);
+  UDP &udp;
 };
 
 #endif

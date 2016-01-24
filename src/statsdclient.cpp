@@ -1,18 +1,15 @@
 #include "statsdclient.h"
 
-statsdclient::statsdclient(IPAddress destIP,
-                           uint16_t destPort,
-                           UDP &udp) {
-  this->destIP = destIP;
-  this->destPort = destPort;
-  this->udp = udp;
+statsdclient::statsdclient(IPAddress _destIP,
+                           uint16_t _destPort,
+                           UDP &_udp) : udp(_udp), destIP(_destIP), destPort(_destPort) {
 }
 
 chain& statsdclient::begin() {
-  return new chain(this);
+  return new chain(*this);
 }
 
-void send(const char *buffer) {
+void statsdclient::send(const char *buffer) {
   this->udp.beginPacket(this->destIP, this->destPort);
   this->udp.write(buffer, strlen(buffer));
   this->udp.endPacket();

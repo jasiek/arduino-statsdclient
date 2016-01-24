@@ -6,37 +6,32 @@ chain::chain(statsdclient &_client) : client(_client) {
 }
 
 chain &chain::counter(const char *metric, int value, float freq) {
-  char stringValue[16];
-  itoa(value, stringValue, 10);
-  append(metric, stringValue, "c", freq);
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "c", freq);
   return *this;
 }
 
 chain &chain::counter(const char *metric, int value) {
-  char stringValue[16];
-  itoa(value, stringValue, 10);
-  append(metric, stringValue, "c");
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "c");
   return *this;
 }
 
 chain &chain::timing(const char* metric, int value, float freq) {
-  char stringValue[16];
-  itoa(value, stringValue, 10);
-  append(metric, stringValue, "ms", freq);
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "ms", freq);
   return *this;
 }
 
 chain &chain::timing(const char* metric, int value) {
-  char stringValue[16];
-  itoa(value, stringValue, 10);
-  append(metric, stringValue, "ms");
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "ms");
   return *this;
 }
 
 chain &chain::gauge(const char* metric, int value) {
-  char stringValue[16];
-  itoa(value, stringValue, 10);
-  append(metric, stringValue, "g");
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "g");
   return *this;
 }
 
@@ -60,14 +55,13 @@ void chain::append(const char* metric, const char* value, const char* type) {
 }
 
 void chain::append(const char* metric, const char* value, const char* type, float freq) {
-  char stringFreq[16];
-  ftoa(freq, stringFreq);
+  String stringFreq(freq);
   strcat(this->buffer, metric);
   strcat(this->buffer, ":");
   strcat(this->buffer, value);
   strcat(this->buffer, "|");
   strcat(this->buffer, type);
   strcat(this->buffer, "|@");
-  strcat(this->buffer, stringFreq);
+  strcat(this->buffer, stringFreq.c_str());
   strcat(this->buffer, "\n");
 }
