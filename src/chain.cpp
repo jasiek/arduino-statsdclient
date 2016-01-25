@@ -17,19 +17,19 @@ chain &chain::counter(const char *metric, int value) {
   return *this;
 }
 
-chain &chain::timing(const char* metric, int value, float freq) {
+template <typename Numeric> chain &chain::timing(const char* metric, Numeric value, float freq) {
   String stringValue(value);
   append(metric, stringValue.c_str(), "ms", freq);
   return *this;
 }
 
-chain &chain::timing(const char* metric, int value) {
+template <typename Numeric> chain &chain::timing(const char* metric, Numeric value) {
   String stringValue(value);
   append(metric, stringValue.c_str(), "ms");
   return *this;
 }
 
-chain &chain::gauge(const char* metric, int value) {
+template <typename Numeric> chain &chain::gauge(const char* metric, Numeric value) {
   String stringValue(value);
   append(metric, stringValue.c_str(), "g");
   return *this;

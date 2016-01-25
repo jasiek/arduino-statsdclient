@@ -10,10 +10,10 @@ class chain {
   chain& counter(const char*, int, float);
   chain& counter(const char*, int);
   
-  chain& timing(const char*, int, float);
-  chain& timing(const char*, int);
+  template <typename Numeric> chain& timing(const char*, Numeric, float);
+  template <typename Numeric> chain& timing(const char*, Numeric);
   
-  chain& gauge(const char*, int);
+  template <typename Numeric> chain& gauge(const char*, Numeric);
   chain& set(const char*, const char*);
   void send();
  private:
