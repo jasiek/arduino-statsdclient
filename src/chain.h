@@ -24,4 +24,24 @@ class chain {
   char *buffer;
 };
 
+// http://stackoverflow.com/questions/10632251/undefined-reference-to-template-function
+
+template <typename Numeric> chain &chain::timing(const char* metric, Numeric value, float freq) {
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "ms", freq);
+  return *this;
+}
+
+template <typename Numeric> chain &chain::timing(const char* metric, Numeric value) {
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "ms");
+  return *this;
+}
+
+template <typename Numeric> chain &chain::gauge(const char* metric, Numeric value) {
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "g");
+  return *this;
+}
+
 #endif
