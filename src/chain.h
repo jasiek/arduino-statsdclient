@@ -9,6 +9,8 @@ class chain {
   chain(UDP &);
   chain& counter(const char*, int, float);
   chain& counter(const char*, int);
+  chain& histogram(const char*, int);
+  chain& meter(const char*, int);
   
   template <typename Numeric> chain& timing(const char*, Numeric, float);
   template <typename Numeric> chain& timing(const char*, Numeric);

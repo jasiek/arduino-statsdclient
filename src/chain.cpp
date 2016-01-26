@@ -17,6 +17,16 @@ chain &chain::counter(const char *metric, int value) {
   return *this;
 }
 
+chain &chain::histogram(const char *metric, int value) {
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "h");
+}
+
+chain &chain::meter(const char *metric, int value) {
+  String stringValue(value);
+  append(metric, stringValue.c_str(), "h");
+}
+
 chain &chain::set(const char* metric, const char* value) {
   append(metric, value, "s");
   return *this;
