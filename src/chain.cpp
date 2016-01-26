@@ -38,23 +38,16 @@ void chain::send() {
   delete this;
 }
 
-void chain::append(const char* metric, const char* value, const char* type) {
-  strcat(this->buffer, metric);
-  strcat(this->buffer, ":");
-  strcat(this->buffer, value);
-  strcat(this->buffer, "|");
-  strcat(this->buffer, type);
-  strcat(this->buffer, "\n");
-}
-
 void chain::append(const char* metric, const char* value, const char* type, float freq) {
-  String stringFreq(freq);
   strcat(this->buffer, metric);
   strcat(this->buffer, ":");
   strcat(this->buffer, value);
   strcat(this->buffer, "|");
   strcat(this->buffer, type);
-  strcat(this->buffer, "|@");
-  strcat(this->buffer, stringFreq.c_str());
+  if (freq > 0) {
+    String stringFreq(freq);
+    strcat(this->buffer, "|@");
+    strcat(this->buffer, stringFreq.c_str());
+  }
   strcat(this->buffer, "\n");
 }

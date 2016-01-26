@@ -19,8 +19,7 @@ class chain {
   chain& set(const char*, const char*);
   void send();
  private:
-  void append(const char *, const char *, const char*);
-  void append(const char *, const char *, const char*, float);
+  void append(const char *, const char *, const char*, float freq = 0.0f);
   
   UDP &udp;
   char *buffer;
